@@ -1,0 +1,48 @@
+# Survey Variables: ipaddress, macaddress, server_type
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    hostname: prov-{{ macaddress | replace({':':''}) }}
+    stypes:
+      RHEL:
+        Credentials:
+          - Linux Default Root
+        Template: Provision Linux
+      Debian:
+        Credentials:
+          - Linux Default Root
+        Template: Provision Linux
+      Windows:
+        Credentials:
+          - Windows Admin
+        Template: Provision Windows
+  tasks:
+    # https://docs.ansible.com/ansible/latest/collections/awx/awx/host_module.html#ansible-collections-awx-awx-host-module
+    - name: Add host to inventory
+      awx.awx.host:
+        name: "{{ hostname }}"
+        inventory: Provisioning Servers
+        state: present
+        variables:
+          ansible_host: "{{ ipaddress }}"
+      
+    # https://docs.ansible.com/ansible/latest/collections/awx/awx/job_launch_module.html#ansible-collections-awx-awx-job-launch-module
+    - name: Execute Provisioning Job against calling host
+      awx.awx.job_launch:
+        job_template: "{{ stypes[server_type].Template }}"
+        inventory: Provisioning Servers
+        limit: "{{ hostname }}"
+        credentials: "{{ stypes[server_type].Credentials }}"
+        extra_vars:
+          macaddress: "{{ macaddress }}"
+          server_type: "{{ server_type }}"
+
+    # https://docs.ansible.com/ansible/latest/collections/awx/awx/host_module.html#ansible-collections-awx-awx-host-module
+    - name: Remove host from inventory
+      awx.awx.host:
+        name: "{{ hostname }}"
+        inventory: Provisioning Servers
+        state: absent
+
