@@ -20,6 +20,16 @@ The other inventory will be blank also but we will be provisioning our hosts int
 ## Playbooks
 There are 2 playbooks provided in this example.  Both require the [AWX.AWX](https://docs.ansible.com/ansible/latest/collections/awx/awx/index.html) collection. The first playbook is callback.yml. This playbook is what is ran from the server that is to be provisioned. You don't really need this playbook, as you can do the same thing with curl on Linux (or create a systemd service) or powershell on Windows. The jist of it is that you are going to call AAP and launch a job. You are going to use a username / password or you can do it with an OAuth token. We will not be using the Provisioning Callback feature of AAP (otherwise we wouldn't need these playbooks).  In this example we are storing the password in /etc/ and it should be ownable only by root. You could even make it clean up this file afterwards.
 
+If you use my example playbook, it is basically looking for an INI file located at /etc/ansible/provision.yml that looks like this
+```
+[provision]
+hostname=my_app_hostname
+username=provision
+password=provision
+job_template=Provision Servers
+server_type=RHEL
+```
+
 The 2nd playbook is the main provisioner, provision.yml. It requires you to create a template with a few things in it.
 
 - Name: Provision Servers (or you can change to anything as long as your callback.yml calls the correct one)
