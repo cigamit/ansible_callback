@@ -1,0 +1,6 @@
+- name: Call AAP to provision server
+  hosts: localhost
+  connection: local
+  tasks:
+    - debug:
+        var: vars
