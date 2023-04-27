@@ -29,7 +29,7 @@ The 2nd playbook is the main provisioner, provision.yml. It requires you to crea
 - Concurrent Jobs: Checked
 
 This main provisioner is going to need a few variables passed into the extra_vars.  You could make it pass it in via the survey instead (which is a bit more secure), but I am being a bit lazy for this example. We will be passing in 3 variables.
-- server_type: This can be anything, whether the OS or Application type for the server that will be provisioned. I stick to OS in this example but it really just allows us to call different playbooks or pass in different credentials for different servers types.
+- server_type: This can be anything, whether the OS or Application type for the server that will be provisioned. I stick to OS in this example but it really just allows us to call different playbooks or pass in different credentials for different servers types. You could even do it based upon location, as I use completely different default credentials for my Azure, AWS, and VMWare hosts (but the same playbook).
 - ipaddress: This is the IP of the server currently (even if you may change it later during the provisioning process)
 - macaddress: We use the mac to set a temporary hostname in AAP.  The actual hostname of the server might not be set and we don't want to use localhost if so.
 
