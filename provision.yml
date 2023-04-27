@@ -39,7 +39,14 @@
         extra_vars:
           macaddress: "{{ macaddress }}"
           server_type: "{{ server_type }}"
+      register: job
 
+    # https://docs.ansible.com/ansible/latest/collections/awx/awx/job_wait_module.html#ansible-collections-awx-awx-job-wait-module
+    - name: Wait for job max 120s
+      job_wait:
+        job_id: "{{ job.id }}"
+        timeout: 600
+        
     # https://docs.ansible.com/ansible/latest/collections/awx/awx/host_module.html#ansible-collections-awx-awx-host-module
     - name: Remove host from inventory
       awx.awx.host:
