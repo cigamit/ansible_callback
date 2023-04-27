@@ -53,4 +53,5 @@
         name: "{{ hostname }}"
         inventory: Provisioning Servers
         state: absent
-
+      retries: 10
+      delay: 10
