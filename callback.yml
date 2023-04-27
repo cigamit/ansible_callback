@@ -5,7 +5,7 @@
     server_type: RHEL
     aap_host:  mytower
     aap_user: provision
-    aap_pass: provision
+    aap_pass: "{{ lookup('file', '/etc/ansible/provision_pass.txt') }}"
     aap_job_template: Provision Servers
   tasks:
     # https://docs.ansible.com/ansible/latest/collections/awx/awx/job_launch_module.html#ansible-collections-awx-awx-job-launch-module
