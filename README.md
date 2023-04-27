@@ -21,11 +21,11 @@ There are 2 playbooks provided in this example. The first playbook is callback.y
 
 The 2nd playbook is the main provisioner, provision.yml. It requires you to create a template with a few things in it.
 
-Name: Provision Servers (or you can change to anything as long as your callback.yml calls the correct one)
-Inventory: Blank (this is the blank inventory or really any other inventory besides the provisioner will work)
-Credentials: (A credential that utilizes the type: Red Hat Ansible Automation Platform that has access to add to the appropriate inventory and run any of your existing provisioning playbooks)
-Variables: (set to prompt on launch)
-Concurrent Jobs: Checked
+- Name: Provision Servers (or you can change to anything as long as your callback.yml calls the correct one)
+- Inventory: Blank (this is the blank inventory or really any other inventory besides the provisioner will work)
+- Credentials: (A credential that utilizes the type: Red Hat Ansible Automation Platform that has access to add to the appropriate inventory and run any of your existing provisioning playbooks)
+- Variables: (set to prompt on launch)
+- Concurrent Jobs: Checked
 
 This main provisioner is going to need a few variables passed into the extra_vars.  You could make it pass it in via the survey instead (which is a bit more secure), but I am being a bit lazy for this example. We will be passing in 3 variables.
 - server_type: This can be anything, whether the OS or Application type for the server that will be provisioned. I stick to OS in this example but it really just allows us to call different playbooks or pass in different credentials for different servers types.
@@ -35,11 +35,11 @@ This main provisioner is going to need a few variables passed into the extra_var
 Inside our provision.yml we have some variables at the top that we will need to edit to match our environment.  This is the stypes variable. Here you will set all your different server types and the appropriate playbook to call and what credentials to pass in.
 
 Now we just need to fix our original Provisioning Playbooks that may be called from the stypes variables.  They will need a few things set to "Prompt on Launch" so that we can change things on the fly.
-Inventory: Set to Prompt on Launch. We need this because we are specifying the Inventory in the playbook, if you remove that, you can set this to the Provisioning Inventory and remove the check. By leaving it Prompt on Launch you can technically make the provision.yml change the inventory name for each server type also with a small modification.
-Variables: Prompt on Launch
-Credentials: Prompt on Launch (so we can specify different credentials for different servers types if we want)
-Limit: Prompt on Launch (so we can run it just against the server we are adding)
-Concurrent Jobs: True
+- Inventory: Set to Prompt on Launch. We need this because we are specifying the Inventory in the playbook, if you remove that, you can set this to the Provisioning Inventory and remove the check. By leaving it Prompt on Launch you can technically make the provision.yml change the inventory name for each server type also with a small modification.
+- Variables: Prompt on Launch
+- Credentials: Prompt on Launch (so we can specify different credentials for different servers types if we want)
+- Limit: Prompt on Launch (so we can run it just against the server we are adding)
+- Concurrent Jobs: True
 
 
 
