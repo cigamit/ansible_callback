@@ -34,7 +34,8 @@
       awx.awx.job_launch:
         job_template: "{{ stypes[server_type].Template }}"
         inventory: Provisioning Servers
-        limit: "{{ hostname }}"
+        limit: 
+          - "{{ hostname }}"
         credentials: "{{ stypes[server_type].Credentials }}"
         extra_vars:
           macaddress: "{{ macaddress }}"
