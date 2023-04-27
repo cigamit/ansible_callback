@@ -43,7 +43,7 @@
       register: job
 
     # https://docs.ansible.com/ansible/latest/collections/awx/awx/job_wait_module.html#ansible-collections-awx-awx-job-wait-module
-    - name: Wait for job max 120s
+    - name: Wait for job max 600s
       awx.awx.job_wait:
         job_id: "{{ job.id }}"
         timeout: 600
