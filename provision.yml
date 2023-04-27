@@ -4,7 +4,7 @@
   connection: local
   gather_facts: no
   vars:
-    hostname: prov-{{ macaddress | replace({':',''}) }}
+    hostname: prov-{{ macaddress | replace(':','') }}
     stypes:
       # server_type variable should match any of these keys
       RHEL:
