@@ -8,6 +8,7 @@
     aap_pass: provision
     aap_job_template: Provision Servers
   tasks:
+    # https://docs.ansible.com/ansible/latest/collections/awx/awx/job_launch_module.html#ansible-collections-awx-awx-job-launch-module
     - name: Call AAP Server
       awx.awx.job_launch:
         controller_host: "{{ aap_host }}"
