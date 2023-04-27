@@ -12,12 +12,12 @@ To start we will create 2 Inventories in this example
  - Blank
  - Provisioning Servers
  
-The Blank inventory contains absolutely no servers. We will use it for the main provisioning playbook. This is necessary to have this playbook running via a different inventory (really you could pick any inventory) as we will be cleaning up the provisioning host afterwards.  If you use the same inventory for the provisioning hosts, you will run into the nonsensical error that you can't delete the host because it is being used by a running job, even though it isn't.
+The Blank inventory contains absolutely no servers. We will use it for the main provisioning playbook. This is necessary to have this playbook running via a different inventory (really you could pick any inventory) as we will be cleaning up the provisioning host afterwards.  If you use the same inventory for the provisioning hosts, you will run into the nonsensical error that you can't delete the host because it is being used by a running job, even though it isn't (the inventory itself is whats locked).
 
 The other inventory will be blank also but we will be provisioning our hosts into here. I like to keep my hosts being provisioned separate until they are done, and then I make my specific provisioning playbook add them to the appropriate inventory later (or run a sync).
 
 ## Playbooks
-There are 2 playbooks provided in this example. The first playbook is callback.yml. This playbook is what is ran from the server that is to be provisioned. You don't really need this playbook, as you can do the same thing with curl or powershell on Windows. The jist of it is that you are going to call AAP and launch a job. You are going to use a username / password or you can do it with a token. We will not be using the Provisioning Callback feature of AAP (otherwise we wouldn't be using these playbooks).
+There are 2 playbooks provided in this example. The first playbook is callback.yml. This playbook is what is ran from the server that is to be provisioned. You don't really need this playbook, as you can do the same thing with curl or powershell on Windows. The jist of it is that you are going to call AAP and launch a job. You are going to use a username / password or you can do it with an OAuth token. We will not be using the Provisioning Callback feature of AAP (otherwise we wouldn't be using these playbooks).  In this example we are storing the password in /etc/ and it should be ownable only by root.  You could even make it clean up this file afterwards.
 
 The 2nd playbook is the main provisioner, provision.yml. It requires you to create a template with a few things in it.
 
