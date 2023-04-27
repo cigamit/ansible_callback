@@ -1,6 +1,20 @@
-- name: Call AAP to provision server
+- name: Call AAP Server to Provision
   hosts: localhost
   connection: local
+  vars:
+    server_type: RHEL
+    aap_host:  mytower
+    aap_user: provision
+    aap_pass: provision
+    aap_job_template: Provision Servers
   tasks:
-    - debug:
-        var: vars
+    - name: Call AAP Server
+      awx.awx.job_launch:
+      controller_host: "{{ aap_host }}"
+      controller_username: "{{ app_user }}"
+      controller_password: "{{ app_pass }}"
+      job_template: "{{ app_job_template }}"
+      extra_vars:
+        server_type: "{{ server_type }}"
+        ipaddress: "{{ ansible_default_ipv4.address }}"
+        macaddress: "{{ ansible_default_ipv4.macaddress }}"
