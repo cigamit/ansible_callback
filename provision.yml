@@ -54,7 +54,3 @@
         name: "{{ hostname }}"
         inventory: Provisioning Servers
         state: absent
-      register: rmhost
-      until: rmhost is not failed
-      retries: 10
-      delay: 10
