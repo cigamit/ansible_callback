@@ -23,7 +23,7 @@ There are 2 playbooks provided in this example.  Both require the [AWX.AWX](http
 If you use my example playbook, it is basically looking for an INI file located at /etc/ansible/provision.yml that looks like this
 ```
 [provision]
-hostname=my_app_hostname
+hostname=my_aap_hostname
 username=provision
 password=provision
 job_template=Provision Servers
