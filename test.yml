@@ -1,0 +1,5 @@
+- name: Dummy Provision Test
+  hosts: all
+  tasks:
+    - debug:
+        msg: Provisioning Host
