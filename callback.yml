@@ -1,21 +1,15 @@
 - name: Call AAP Server to Provision
   hosts: localhost
   connection: local
-  vars:
-    server_type: RHEL
-    aap_host:  mytower
-    aap_user: provision
-    aap_pass: "{{ lookup('file', '/etc/ansible/provision_pass.txt') }}"
-    aap_job_template: Provision Servers
   tasks:
-    # https://docs.ansible.com/ansible/latest/collections/awx/awx/job_launch_module.html#ansible-collections-awx-awx-job-launch-module
     - name: Call AAP Server
       awx.awx.job_launch:
-        controller_host: "{{ aap_host }}"
-        controller_username: "{{ aap_user }}"
-        controller_password: "{{ aap_pass }}"
-        job_template: "{{ aap_job_template }}"
+        controller_host: "{{ lookup('ansible.builtin.ini', 'hostname', section='provision',  file='/etc/ansible/provision.ini') }}"
+        controller_username: "{{ lookup('ansible.builtin.ini', 'username', section='provision',  file='/etc/ansible/provision.ini') }}"
+        controller_password: "{{ lookup('ansible.builtin.ini', 'password', section='provision',  file='/etc/ansible/provision.ini') }}"
+        job_template: "{{ lookup('ansible.builtin.ini', 'job_template', section='provision',  file='/etc/ansible/provision.ini') }}"
+        validate_certs: false
         extra_vars:
-          server_type: "{{ server_type }}"
+          server_type: "{{ lookup('ansible.builtin.ini', 'server_type', section='provision',  file='/etc/ansible/provision.ini') }}"
           ipaddress: "{{ ansible_default_ipv4.address }}"
           macaddress: "{{ ansible_default_ipv4.macaddress }}"
