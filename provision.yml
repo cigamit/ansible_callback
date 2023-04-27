@@ -16,7 +16,7 @@
         Template: Provision Linux
       Windows:
         Credentials:
-          - Windows Admin
+          - Windows Default Admin
         Template: Provision Windows
   tasks:
     # https://docs.ansible.com/ansible/latest/collections/awx/awx/host_module.html#ansible-collections-awx-awx-host-module
